@@ -1,5 +1,8 @@
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../services/game_service.dart';
+import 'glass.dart';
 
 class BeforeAfterSlider extends StatefulWidget {
   final File beforeImage;
@@ -10,7 +13,7 @@ class BeforeAfterSlider extends StatefulWidget {
     super.key,
     required this.beforeImage,
     required this.afterImage,
-    this.height = 320,
+    this.height = 300,
   });
 
   @override
@@ -18,101 +21,82 @@ class BeforeAfterSlider extends StatefulWidget {
 }
 
 class _BeforeAfterSliderState extends State<BeforeAfterSlider> {
-  double _splitFraction = 0.5;
+  double _split = 0.5;
+
+  Widget _pillTag(String text, Color color) => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(14),
+          boxShadow: const [
+            BoxShadow(color: Color(0x22000000), blurRadius: 8, offset: Offset(0, 2)),
+          ],
+        ),
+        child: Text(
+          text,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 11,
+            fontWeight: FontWeight.w800,
+            letterSpacing: 0.6,
+          ),
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final totalWidth = constraints.maxWidth;
-        final splitPos = totalWidth * _splitFraction;
+    return LayoutBuilder(builder: (context, c) {
+      final w = c.maxWidth;
+      final x = w * _split;
+      final tn = GameService.instance.isTunisian;
 
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(16),
-          child: Container(
-            height: widget.height,
-            width: totalWidth,
-            color: Colors.black,
+      void drag(double dx) =>
+          setState(() => _split = (_split + dx / w).clamp(0.04, 0.96));
+
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(24),
+        child: Container(
+          width: w,
+          height: widget.height,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(24),
+            border: Border.all(color: AppleColors.border, width: 1.5),
+          ),
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onHorizontalDragUpdate: (d) => drag(d.delta.dx),
+            onTapDown: (d) =>
+                setState(() => _split = (d.localPosition.dx / w).clamp(0.04, 0.96)),
             child: Stack(
               children: [
-                // "After" (Clean) Image in background
+                // Clean Image (After)
                 Positioned.fill(
-                  child: Image.file(
-                    widget.afterImage,
-                    fit: BoxFit.cover,
-                  ),
+                  child: Image.file(widget.afterImage, fit: BoxFit.cover),
                 ),
-
-                // "Before" (Dirty) Image clipped by the divider fraction
+                // Contaminated Image (Before)
                 Positioned(
+                  left: 0,
                   top: 0,
                   bottom: 0,
-                  left: 0,
-                  width: splitPos.clamp(0.0, totalWidth),
+                  width: x,
                   child: ClipRect(
                     child: OverflowBox(
                       alignment: Alignment.centerLeft,
-                      minWidth: totalWidth,
-                      maxWidth: totalWidth,
-                      minHeight: widget.height,
-                      maxHeight: widget.height,
-                      child: Image.file(
-                        widget.beforeImage,
-                        fit: BoxFit.cover,
+                      minWidth: w,
+                      maxWidth: w,
+                      child: SizedBox(
+                        width: w,
+                        height: widget.height,
+                        child: Image.file(widget.beforeImage, fit: BoxFit.cover),
                       ),
                     ),
                   ),
                 ),
-
-                // "DIRTY" badge on left
+                Positioned(top: 14, left: 14, child: _pillTag(tn ? 'قبل' : 'BEFORE', AppleColors.primary)),
+                Positioned(top: 14, right: 14, child: _pillTag(tn ? 'من بعد' : 'AFTER', AppleColors.green)),
+                // Divider line
                 Positioned(
-                  top: 14,
-                  left: 14,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFD00000).withAlpha(220),
-                      borderRadius: BorderRadius.circular(6),
-                      border: Border.all(color: Colors.white24),
-                    ),
-                    child: const Text(
-                      'BEFORE / CONTAMINATED',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 0.8,
-                      ),
-                    ),
-                  ),
-                ),
-
-                // "RESTORED" badge on right
-                Positioned(
-                  top: 14,
-                  right: 14,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF2D6A4F).withAlpha(220),
-                      borderRadius: BorderRadius.circular(6),
-                      border: Border.all(color: Colors.white24),
-                    ),
-                    child: const Text(
-                      'AFTER / RESTORED',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 0.8,
-                      ),
-                    ),
-                  ),
-                ),
-
-                // Draggable vertical divider bar
-                Positioned(
-                  left: splitPos - 1.5,
+                  left: x - 1.5,
                   top: 0,
                   bottom: 0,
                   child: Container(
@@ -120,62 +104,36 @@ class _BeforeAfterSliderState extends State<BeforeAfterSlider> {
                     color: Colors.white,
                   ),
                 ),
-
-                // Draggable handle knob in the middle
+                // Draggable Handle
                 Positioned(
-                  left: splitPos - 22,
-                  top: (widget.height / 2) - 22,
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onHorizontalDragUpdate: (details) {
-                      setState(() {
-                        _splitFraction = (_splitFraction + (details.delta.dx / totalWidth))
-                            .clamp(0.02, 0.98);
-                      });
-                    },
-                    child: Container(
-                      width: 44,
-                      height: 44,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFE85D04),
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white, width: 3),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black45,
-                            blurRadius: 8,
-                            offset: Offset(0, 3),
-                          )
-                        ],
-                      ),
-                      child: const Center(
-                        child: Icon(
-                          Icons.drag_indicator_rounded,
-                          color: Colors.white,
-                          size: 22,
+                  left: x - 22,
+                  top: widget.height / 2 - 22,
+                  child: Container(
+                    width: 44,
+                    height: 44,
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(0x30000000),
+                          blurRadius: 12,
+                          offset: Offset(0, 3),
                         ),
-                      ),
+                      ],
                     ),
-                  ),
-                ),
-
-                // Tap detector across whole surface for instant slider reposition
-                Positioned.fill(
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onHorizontalDragUpdate: (details) {
-                      setState(() {
-                        _splitFraction = (_splitFraction + (details.delta.dx / totalWidth))
-                            .clamp(0.02, 0.98);
-                      });
-                    },
+                    child: const Icon(
+                      CupertinoIcons.arrow_left_right,
+                      color: AppleColors.ink,
+                      size: 18,
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-        );
-      },
-    );
+        ),
+      );
+    });
   }
 }

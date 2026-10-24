@@ -1,35 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'screens/home_screen.dart';
 import 'services/detector_service.dart';
+import 'services/game_service.dart';
+import 'widgets/glass.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Initialize the on-device AI detector service
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+      statusBarBrightness: Brightness.light,
+      systemNavigationBarColor: Colors.white,
+      systemNavigationBarIconBrightness: Brightness.dark,
+    ),
+  );
+  await GameService.instance.init();
   await DetectorService.instance.initialize();
-
-  runApp(const TrashVisionApp());
+  runApp(const CleanYourStreetApp());
 }
 
-class TrashVisionApp extends StatelessWidget {
-  const TrashVisionApp({super.key});
+class CleanYourStreetApp extends StatelessWidget {
+  const CleanYourStreetApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'TrashVision AI',
+      title: 'Clean Your Street AI',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        brightness: Brightness.dark,
-        scaffoldBackgroundColor: const Color(0xFF111714),
-        colorScheme: const ColorScheme.dark(
-          primary: Color(0xFFE85D04),
-          secondary: Color(0xFF55A630),
-          surface: Color(0xFF19231D),
+        useMaterial3: true,
+        brightness: Brightness.light,
+        scaffoldBackgroundColor: AppleColors.canvas,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: AppleColors.primary,
+          brightness: Brightness.light,
+          surface: Colors.white,
         ),
-        textTheme: GoogleFonts.spaceGroteskTextTheme(
-          ThemeData.dark().textTheme,
+        textTheme: GoogleFonts.interTextTheme(ThemeData.light().textTheme),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          systemOverlayStyle: SystemUiOverlayStyle.dark,
         ),
       ),
       home: const HomeScreen(),

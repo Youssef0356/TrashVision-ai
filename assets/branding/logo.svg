@@ -1,0 +1,46 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sunsetGrad" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FF9E00"/>
+      <stop offset="55%" stop-color="#FF6F00"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </linearGradient>
+    <radialGradient id="glowGrad" cx="256" cy="256" r="220" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="symbolShadow" x="50" y="50" width="412" height="412" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#8A2B00" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- iOS Squircle Base -->
+  <rect x="0" y="0" width="512" height="512" rx="114" fill="url(#sunsetGrad)"/>
+  <rect x="2" y="2" width="508" height="508" rx="112" stroke="#FFFFFF" stroke-opacity="0.25" stroke-width="4"/>
+
+  <!-- Core Glow -->
+  <circle cx="256" cy="256" r="220" fill="url(#glowGrad)"/>
+
+  <!-- Main Symbol Group with Drop Shadow -->
+  <g filter="url(#symbolShadow)">
+    <!-- Viewfinder Brackets -->
+    <path d="M 100 160 L 100 120 Q 100 100 120 100 L 160 100" stroke="#FFFFFF" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 352 100 L 392 100 Q 412 100 412 120 L 412 160" stroke="#FFFFFF" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 100 352 L 100 392 Q 100 412 120 412 L 160 412" stroke="#FFFFFF" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 352 412 L 392 412 Q 412 412 412 392 L 412 352" stroke="#FFFFFF" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Aperture Dashed Ring -->
+    <circle cx="256" cy="256" r="110" stroke="#FFFFFF" stroke-width="10" stroke-dasharray="28 20" stroke-opacity="0.65"/>
+    <circle cx="256" cy="256" r="88" fill="#FFFFFF" fill-opacity="0.12"/>
+
+    <!-- Geometric Eco Transformation Sprout -->
+    <path d="M 256 348 C 256 348 184 298 184 226 C 184 172 232 152 256 142 C 280 152 328 172 328 226 C 328 298 256 348 256 348 Z" fill="#FFFFFF"/>
+    <path d="M 256 166 L 256 334" stroke="#FF6F00" stroke-width="10" stroke-linecap="round"/>
+    
+    <!-- Secondary Dynamic Eco Leaf accent -->
+    <path d="M 256 244 C 290 244 320 224 336 196 C 336 240 300 270 256 274 Z" fill="#FFFFFF" fill-opacity="0.9"/>
+
+    <!-- Clean Sparkle Star -->
+    <path d="M 380 126 Q 380 144 398 144 Q 380 144 380 162 Q 380 144 362 144 Q 380 144 380 126 Z" fill="#FFFFFF"/>
+  </g>
+</svg>

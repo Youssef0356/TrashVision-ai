@@ -1,4 +1,4 @@
-package com.example.clean_quest
+package com.trashvision.ai
 
 import io.flutter.embedding.android.FlutterActivity
 

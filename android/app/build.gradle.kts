@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.clean_quest"
+    namespace = "com.trashvision.ai"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -20,7 +20,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.clean_quest"
+        applicationId = "com.trashvision.ai"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
@@ -41,3 +41,4 @@ android {
 flutter {
     source = "../.."
 }
+

@@ -1,6 +1,6 @@
 {
-    "name": "clean_quest",
-    "short_name": "clean_quest",
+    "name": "TrashVision AI",
+    "short_name": "TrashVision AI",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
@@ -33,3 +33,4 @@
         }
     ]
 }
+
