@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final game = GameService.instance;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF111714), // Deep tactical forest charcoal
+      backgroundColor: const Color(0xFF111714),
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             const SizedBox(width: 8),
                             const Text(
-                              'TERRA SCOUT // OPS ACTIVE',
+                              'TRASHVISION AI // ONLINE',
                               style: TextStyle(
                                 color: Color(0xFF809B8B),
                                 fontSize: 11,
@@ -106,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Expanded(
                       child: _buildMetricBlock(
-                        title: 'SPECIMENS RECLAIMED',
+                        title: 'WASTE ELIMINATED',
                         value: '${game.totalCleanedItems}',
                         unit: 'ITEMS',
                         accent: const Color(0xFF55A630),
@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(width: 10),
                     Expanded(
                       child: _buildMetricBlock(
-                        title: 'FIELD EXPEDITIONS',
+                        title: 'CLEAN MISSIONS',
                         value: '${game.history.length}',
                         unit: 'OPS',
                         accent: const Color(0xFF2A9D8F),
@@ -124,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(width: 10),
                     Expanded(
                       child: _buildMetricBlock(
-                        title: 'SALVAGE XP',
+                        title: 'TRASHVISION XP',
                         value: '${game.totalXp}',
                         unit: 'PTS',
                         accent: const Color(0xFFF48C06),
@@ -135,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
-            // Primary Reclamation Call To Action
+            // Primary Call To Action Banner
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 14, 20, 24),
@@ -159,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(6),
                             ),
                             child: const Text(
-                              'READY FOR SCAN',
+                              'VISION ENGINE ARMED',
                               style: TextStyle(
                                 color: Color(0xFFE85D04),
                                 fontSize: 11,
@@ -169,12 +169,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ),
-                          const Icon(Icons.satellite_alt_rounded, color: Color(0xFF809B8B), size: 20),
+                          const Icon(Icons.remove_red_eye_rounded, color: Color(0xFF809B8B), size: 20),
                         ],
                       ),
                       const SizedBox(height: 12),
                       const Text(
-                        'Launch Clean Patrol',
+                        'Start Clean Mission',
                         style: TextStyle(
                           color: Color(0xFFEBE5D8),
                           fontSize: 22,
@@ -184,7 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       const SizedBox(height: 6),
                       const Text(
-                        '1. Scan contaminated sector (Before)\n2. Clear the waste from the ground\n3. Rescan to certify restoration & gain XP',
+                        '1. Snap litter with TrashVision scanner (Before)\n2. Clean and dispose of waste\n3. Rescan to let AI score your work and award XP',
                         style: TextStyle(
                           color: Color(0xFFA1B3A8),
                           fontSize: 13,
@@ -207,7 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Icon(Icons.center_focus_strong, color: Colors.white, size: 22),
                             SizedBox(width: 10),
                             Text(
-                              'DEPLOY FIELD SCANNER',
+                              'ACTIVATE TRASHVISION',
                               style: TextStyle(fontFamily: 'monospace', fontSize: 15),
                             ),
                           ],
@@ -219,7 +219,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
-            // Field Activity Log Header
+            // Activity Log Header
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 20, 12),
@@ -227,7 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text(
-                      'FIELD DISPATCH LOGS',
+                      'AI AUDIT LOGS',
                       style: TextStyle(
                         color: Color(0xFFEBE5D8),
                         fontSize: 14,
@@ -237,7 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     Text(
-                      '${game.history.length} ENTRIES',
+                      '${game.history.length} VERIFIED',
                       style: const TextStyle(
                         color: Color(0xFF809B8B),
                         fontSize: 11,
@@ -249,7 +249,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
-            // Field Log Cards
+            // Log Cards
             if (game.history.isEmpty)
               SliverToBoxAdapter(
                 child: Container(
@@ -262,10 +262,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   child: const Column(
                     children: [
-                      Icon(Icons.terrain_rounded, size: 40, color: Color(0xFF43584C)),
+                      Icon(Icons.camera_enhance_outlined, size: 40, color: Color(0xFF43584C)),
                       SizedBox(height: 12),
                       Text(
-                        'NO OPERATIONS LOGGED TODAY',
+                        'NO AUDITS LOGGED TODAY',
                         style: TextStyle(
                           color: Color(0xFFEBE5D8),
                           fontSize: 13,
@@ -276,7 +276,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       SizedBox(height: 4),
                       Text(
-                        'Initiate a scan to log your first sector cleanup.',
+                        'Spot some litter and scan it to start your cleaning streak.',
                         style: TextStyle(color: Color(0xFF809B8B), fontSize: 12),
                         textAlign: TextAlign.center,
                       ),
@@ -319,7 +319,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Row(
                                     children: [
                                       Text(
-                                        'SECTOR CLEANUP #${quest.id.substring(quest.id.length - 4)}',
+                                        'AUDIT #${quest.id.substring(quest.id.length - 4)}',
                                         style: const TextStyle(
                                           color: Color(0xFFEBE5D8),
                                           fontSize: 13,
@@ -331,7 +331,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    '${quest.itemsCleaned} specimens removed • ${quest.cleanlinessScore.toInt()}% restored',
+                                    '${quest.itemsCleaned} items removed • ${quest.cleanlinessScore.toInt()}% restored',
                                     style: const TextStyle(color: Color(0xFF809B8B), fontSize: 12),
                                   ),
                                 ],
@@ -381,7 +381,6 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Row(
             children: [
-              // Badge avatar
               Container(
                 width: 52,
                 height: 52,
@@ -391,7 +390,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   border: Border.all(color: const Color(0xFF55A630), width: 2),
                 ),
                 child: const Center(
-                  child: Icon(Icons.shield_rounded, color: Color(0xFFEBE5D8), size: 28),
+                  child: Icon(Icons.remove_red_eye_outlined, color: Color(0xFFEBE5D8), size: 28),
                 ),
               ),
               const SizedBox(width: 14),
@@ -410,7 +409,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(height: 3),
                     Text(
-                      'OPERATOR LEVEL ${game.currentLevel} • SATELLITE SYNC OK',
+                      'AI OPERATOR LVL ${game.currentLevel} • VISION V2.0',
                       style: const TextStyle(
                         color: Color(0xFF809B8B),
                         fontSize: 11,
@@ -425,7 +424,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           const SizedBox(height: 16),
 
-          // Industrial Segmented Progress Bar
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -433,7 +431,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
-                    'EXPEDITION PROGRESS',
+                    'NEXT LEVEL CLEARANCE',
                     style: TextStyle(
                       color: Color(0xFF809B8B),
                       fontSize: 10,
